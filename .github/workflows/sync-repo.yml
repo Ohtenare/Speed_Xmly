@@ -27,7 +27,7 @@ jobs:
           github_token: ${{ secrets.PAT }}
           
           
-      - name: Merge staging -> uat
+      - name: Merge main -> master
         uses: devmasx/merge-branch@v1.3.1
         with:
           type: now
