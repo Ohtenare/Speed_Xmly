@@ -33,4 +33,4 @@ jobs:
           type: now
           from_branch: main
           target_branch: master
-          github_token: ${{ github.token }
+          github_token: ${{ secrets.PAT }
