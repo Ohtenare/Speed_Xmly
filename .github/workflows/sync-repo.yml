@@ -1,36 +1,35 @@
 name: 同步上游仓库
 on:
   schedule:
-    - cron: '0 */2 * * *'
-  watch:
-    types: started
-  repository_dispatch:
-    types: sync-repo
+    - cron: '0 0-16/4 * * *'
+  workflow_dispatch:
 jobs:
   repo-sync:
     env:
       PAT: ${{ secrets.PAT }} #此处PAT需要申请，教程详见：https://www.jianshu.com/p/bb82b3ad1d11
     runs-on: ubuntu-latest
-    if: github.event.repository.owner.id == github.event.sender.id
     steps:
       - uses: actions/checkout@v2
         with:
           persist-credentials: false
 
-      - name: sync xmly_speed
+      - name: 同步上游仓库
         uses: repo-sync/github-sync@v2
         if: env.PAT
         with:
-          source_repo: "git@github.com:HakimWoo/tnanko2019-xmly_speed.git"
+          source_repo: "https://github.com/tnanko2019/xmly_speed.git"
           source_branch: "master"
           destination_branch: "main"
           github_token: ${{ secrets.PAT }}
+
           
-          
-      - name: Merge main -> master
-        uses: devmasx/merge-branch@v1.3.1
-        with:
-          type: now
-          from_branch: main
-          target_branch: master
-          github_token: ${{ secrets.PAT }
+      - name: Merge main -> master	
+        uses: devmasx/merge-branch@v1.3.1	
+        if: env.PAT	
+        with:	
+          type: now	
+          from_branch: main	
+          target_branch: master	
+          github_token: ${{ secrets.PAT }}
+
+      
