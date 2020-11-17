@@ -25,5 +25,15 @@ jobs:
           source_branch: "master"
           destination_branch: "main"
           github_token: ${{ secrets.PAT }}
+          
+          
+      - name: Merge main -> master	
+        uses: devmasx/merge-branch@v1.3.1	
+        if: env.PAT	
+        with:	
+          type: now	
+          from_branch: main	
+          target_branch: master	
+          github_token: ${{ secrets.PAT }}
 
 
